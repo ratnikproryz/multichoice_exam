@@ -6,18 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Topic extends Model
+class ChoiceSubmission extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'id',
-        'title',
-        'description',
-        'image',
-        'category_id',
+        'choice_id',
+        'submission_id',
     ];
-
-    public function tests(){
-        return $this->hasMany(Test::class);
-    }
 }

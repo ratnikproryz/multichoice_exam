@@ -23,6 +23,7 @@ return new class extends Migration
                 ->on('questions')
                 ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

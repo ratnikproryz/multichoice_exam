@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Choice;
 use Illuminate\Http\Request;
-use App\Models\User;
 
-class UserController extends Controller
+class ChoiceController extends Controller
 {
     public function index()
     {
-        return User::all();
+        //
     }
 
     public function create()
@@ -17,14 +17,18 @@ class UserController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store($choice, $question_id)
     {
-        //
+        return  Choice::create([
+            'content' => $choice["content"],
+            'is_answer' => $choice["is_answer"],
+            'question_id' => $question_id,
+        ]);
     }
 
     public function show($id)
     {
-        return User::find($id);
+        //
     }
 
     public function edit($id)

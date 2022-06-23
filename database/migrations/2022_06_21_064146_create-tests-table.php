@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->integer('time');
             $table->float('total_point');
             $table->unsignedInteger('user_id');
@@ -30,6 +30,7 @@ return new class extends Migration
                 ->on('topics')
                 ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

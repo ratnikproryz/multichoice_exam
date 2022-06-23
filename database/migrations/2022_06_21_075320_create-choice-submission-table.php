@@ -26,6 +26,7 @@ return new class extends Migration
                 ->on('submissions')
                 ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -1,0 +1,110 @@
+{
+  "test_id": "1",
+  "questions": [
+    {
+      "content": "Khẳng định nào dưới đây về tính đơn điệu của hàm số y=x3+3x2−9x−2019  y = x 3 + 3 x 2 − 9 x − 2019   là đúng ?",
+      "choices": [
+        {
+          "content": "Nghịch biến trên khoảng (-∞ ; -3 )",
+          "is_answer": 0
+        },
+        {
+          "content": "Nghịch biến trên khoảng (-3; 1)",
+          "is_answer": 0
+        },
+        {
+          "content": "Đồng biến trên khoảng (-3; 1)",
+          "is_answer": 0
+        },
+        {
+          "content": "Nghịch biến trên khoảng (1; +∞)",
+          "is_answer": 1
+        }
+      ]
+    },
+    {
+      "content": "Cho hình bình hành   M N P Q MNPQ . Phép tịnh tiến theo véc tơ MN→  biến điểm Q Q  thành điểm nào sau đây?",
+      "choices": [
+        {
+          "content": "Điểm P",
+          "is_answer": 0
+        },
+        {
+          "content": "Điểm Q",
+          "is_answer": 1
+        },
+        {
+          "content": "Điểm M",
+          "is_answer": 0
+        },
+        {
+          "content": "Điểm N",
+          "is_answer": 0
+        }
+      ]
+    },
+    {
+      "content": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại  B ; B A = a ; S A = a √ 2 B;BA=a;SA=a2 và SA vuông góc với mặt phẳng đáy. Góc giữa  SC và mặt phẳng (SAB) bằng bao nhiêu?",
+      "choices": [
+        {
+          "content": "45",
+          "is_answer": 0
+        },
+        {
+          "content": "30",
+          "is_answer": 1
+        },
+        {
+          "content": "60",
+          "is_answer": 0
+        },
+        {
+          "content": "90",
+          "is_answer": 0
+        }
+      ]
+    },
+    {
+      "content": "Cắt khối trụ có bán kính đáy bằng 5 và chiều cao bằng 10 bởi một mặt phẳng song song với trục và cách trục một khoảng bằng 3 ta được thiết diện là",
+      "choices": [
+        {
+          "content": "Hình vuông có diện tích bằng 50",
+          "is_answer": 0
+        },
+        {
+          "content": "Hình chữ nhật có diện tích bằng 100",
+          "is_answer": 0
+        },
+        {
+          "content": "Hình chữ nhật có diện tích bằng 80",
+          "is_answer": 1
+        },
+        {
+          "content": "Hình chữ nhật có diện tích bằng 60",
+          "is_answer": 0
+        }
+      ]
+    },
+    {
+      "content": "Tiếp tuyến với đồ thị hàm số y =  y=x4 − 3x2 + 2018 tại điểm có hoành độ bằng 1 1 có phương trình",
+      "choices": [
+        {
+          "content": "y= 2x + 2018",
+          "is_answer": 1
+        },
+        {
+          "content": "y = -2x + 2018",
+          "is_answer": 0
+        },
+        {
+          "content": "y = -2x + 2016",
+          "is_answer": 0
+        },
+        {
+          "content": "y = -2x + 2020",
+          "is_answer": 0
+        }
+      ]
+    }
+  ]
+}
