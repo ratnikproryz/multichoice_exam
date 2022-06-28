@@ -42,7 +42,7 @@ class QuestionController extends Controller
                 $choices = $question["choices"];
                 foreach ($choices as $choice) {
                     $new_choice = new ChoiceController();
-                    $new_choice= $new_choice->store($choice, $new_question->id);
+                    $new_choice = $new_choice->store($choice, $new_question->id);
                     array_push($questions_res['choices'], $new_choice);
                 }
 
@@ -58,7 +58,9 @@ class QuestionController extends Controller
 
     public function show($id)
     {
-        //
+        $question = Question::find($id);
+        $question->choices;
+        return $question;
     }
 
     public function edit($id)
@@ -68,10 +70,31 @@ class QuestionController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $question = Question::find($id);
+            $question->update($request->all());
+            $choices = $request->input('choices');
+            if ($choices) {
+                foreach ($choices as $item) {
+                    $choice = Choice::find($item["id"]);
+                    $choice->update([
+                        'content' => $item["content"],
+                        'is_answer' => $item["is_answer"],
+                    ]);
+                }
+            }
+            DB::commit();
+            $question->choices;
+            return $question;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
     public function destroy($id)
     {
-        //
+        Question::find($id)->delete();
+        return response()->json(['message' => "Delete question successfully!"]);
     }
 }

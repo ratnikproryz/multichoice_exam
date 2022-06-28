@@ -13,5 +13,6 @@ class ChoiceSubmission extends Model
         'id',
         'choice_id',
         'submission_id',
+        'question_id',
     ];
 }

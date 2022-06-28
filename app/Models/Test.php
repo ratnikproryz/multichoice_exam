@@ -25,4 +25,7 @@ class Test extends Model
     public function submissions(){
         return $this->hasMany(Submission::class);
     }
+    public function choices(){
+        return $this->hasManyThrough(Choice::class, Question::class);
+    }
 }

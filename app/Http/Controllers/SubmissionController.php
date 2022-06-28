@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Submission;
 
 class SubmissionController extends Controller
 {
@@ -18,7 +19,12 @@ class SubmissionController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $user= $request->user();
+        $submission = Submission::create([
+            'test_id' => $request->input('test_id'),
+            'user_id' => $user->id,
+        ]);
+        return response()->json($submission);
     }
 
     public function show($id)

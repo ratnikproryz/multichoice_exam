@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/test', Controllers\TestController::class)->only(['store', 'update', 'destroy']);
     Route::resource('/question', Controllers\QuestionController::class)->only(['store', 'update', 'destroy']);
     Route::resource('/choice', Controllers\ChoiceController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('/submission', Controllers\SubmissionController::class);
+    Route::resource('/choice-submission', Controllers\ChoiceSubmissionController::class);
 });
 
 //route to test apis

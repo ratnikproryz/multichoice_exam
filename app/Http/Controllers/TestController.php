@@ -41,7 +41,12 @@ class TestController extends Controller
 
     public function show($id)
     {
-        return Test::find($id);
+        $test = Test::find($id);
+        $questions = $test->questions;
+        foreach ($questions as $question) {
+            $question->choices;
+        }
+        return $test;
     }
 
     public function edit($id)
