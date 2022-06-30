@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/choice', Controllers\ChoiceController::class)->only(['store', 'update', 'destroy']);
     Route::resource('/submission', Controllers\SubmissionController::class);
     Route::resource('/choice-submission', Controllers\ChoiceSubmissionController::class);
+    Route::get('/calc-point',[Controllers\SubmissionController::class, 'calcPoint']);
 });
 
 //route to test apis
