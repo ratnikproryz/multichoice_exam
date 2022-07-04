@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\ChoiceSubmission;
+use App\Models\Question;
+use App\Models\Submission;
+use App\Models\Test;
+use App\Policies\ChoiceSubmissionPolicy;
+use App\Policies\QuestionPolicy;
+use App\Policies\SubmissionPolicy;
+use App\Policies\TestPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,6 +22,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Test::class => TestPolicy::class,
+        Question::class => QuestionPolicy::class,
+        Submission::class => SubmissionPolicy::class,
+        ChoiceSubmission::class => ChoiceSubmissionPolicy::class,
     ];
 
     /**

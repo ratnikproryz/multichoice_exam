@@ -57,13 +57,16 @@ class TestController extends Controller
     public function update(Request $request, $id)
     {
         $test = Test::find($id);
+        $this->authorize('manage', $test);
         $test->update($request->all());
         return $test;
     }
 
     public function destroy($id)
     {
-        Test::find($id)->delete();
+        $test =Test::find($id);
+        $this->authorize('manage', $test);
+        $test->delete();
         return response()->json(['message' => "Delete test successfully!"]);
     }
 }

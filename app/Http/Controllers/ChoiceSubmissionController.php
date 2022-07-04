@@ -12,7 +12,6 @@ class ChoiceSubmissionController extends Controller
 {
     public function index()
     {
-        
     }
 
     public function create()
@@ -25,7 +24,9 @@ class ChoiceSubmissionController extends Controller
         try {
             DB::beginTransaction();
             $test_id = $request->input('test_id');
+            // $test = Test::find($test_id);
             $submission_id = $request->input('submission_id');
+            // $submission = Submission::find($submission_id);
             if ($this->canSubmit($test_id, $submission_id)) {
                 $answers = $request->input('answers');
                 foreach ($answers as $answer) {
@@ -45,10 +46,11 @@ class ChoiceSubmissionController extends Controller
                         ChoiceSubmission::create($data);
                     }
                 }
+                SubmissionController::calcPoint($request);
                 DB::commit();
                 return response()->json(['message' => "OK!"]);
             }
-            return response()->json(['message' => "The test is finished!"]);
+            return response()->json(['message' => "The test is expired!"], 410);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 500);
@@ -77,7 +79,7 @@ class ChoiceSubmissionController extends Controller
                 DB::commit();
                 return $choice_submited;
             }
-            return response()->json(['message' => "The test is finished!"]);
+            return response()->json(['message' => "The test is expired!"], 410);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
@@ -95,10 +97,7 @@ class ChoiceSubmissionController extends Controller
         $start_time = Submission::find($submission_id)->created_at;
         $current_time = now();
         $deadline = strtotime($start_time . $duration . " minutes");
-        $deadline = date("d-m-Y H:i:s", $deadline);
-        if ($current_time < $deadline) {
-            return true;
-        }
-        return false;
+        $deadline = date("Y-m-d H:i:s", $deadline);
+        return ($current_time < $deadline) ? true : false;
     }
 }

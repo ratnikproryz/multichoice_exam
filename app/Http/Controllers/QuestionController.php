@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Choice;
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Test;
 use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
@@ -70,9 +71,11 @@ class QuestionController extends Controller
 
     public function update(Request $request, $id)
     {
+        $question = Question::find($id);
+        $test = Test::find($question->test_id);
+        $this->authorize('manage', [$question, $test]);
         try {
             DB::beginTransaction();
-            $question = Question::find($id);
             $question->update($request->all());
             $choices = $request->input('choices');
             if ($choices) {
