@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/register', [Controllers\AuthController::class, 'register']);
 Route::post('/login', [Controllers\AuthController::class, 'login']);
+Route::post('/login-google', [Controllers\AuthController::class, 'loginGoogle']);
 
 Route::resource("/user", Controllers\UserController::class)->only(['index', 'show']);
 Route::resource("/category", Controllers\CategoryController::class)->only(['index', 'show']);
@@ -33,6 +34,7 @@ Route::resource('/choice', Controllers\ChoiceController::class)->only(['index', 
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/change-password', [Controllers\AuthController::class, 'changePassword']);
     Route::get('/logout', [Controllers\AuthController::class, 'logout']);
     Route::resource("/user", Controllers\UserController::class)->only(['store', 'update', 'destroy']);
     Route::resource("/category", Controllers\CategoryController::class)->only(['store', 'update', 'destroy']);
@@ -42,7 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/choice', Controllers\ChoiceController::class)->only(['store', 'update', 'destroy']);
     Route::resource('/submission', Controllers\SubmissionController::class);
     Route::resource('/choice-submission', Controllers\ChoiceSubmissionController::class);
-    Route::get('/calc-point',[Controllers\SubmissionController::class, 'calcPoint']);
+    Route::get('/calc-point', [Controllers\SubmissionController::class, 'calcPoint']);
 });
 
 //route to test apis

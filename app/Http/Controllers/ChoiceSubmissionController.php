@@ -26,7 +26,7 @@ class ChoiceSubmissionController extends Controller
             $test_id = $request->input('test_id');
             // $test = Test::find($test_id);
             $submission_id = $request->input('submission_id');
-            // $submission = Submission::find($submission_id);
+            $submission = Submission::find($submission_id);
             if ($this->canSubmit($test_id, $submission_id)) {
                 $answers = $request->input('answers');
                 foreach ($answers as $answer) {
@@ -46,9 +46,9 @@ class ChoiceSubmissionController extends Controller
                         ChoiceSubmission::create($data);
                     }
                 }
-                SubmissionController::calcPoint($request);
+                SubmissionController::calcPoint($submission);
                 DB::commit();
-                return response()->json(['message' => "OK!"]);
+                return response()->json(['message' => "Submit answers successfully!"]);
             }
             return response()->json(['message' => "The test is expired!"], 410);
         } catch (\Exception $e) {

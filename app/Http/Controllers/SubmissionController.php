@@ -13,7 +13,7 @@ class SubmissionController extends Controller
 {
     public function index()
     {
-        
+        // 
     }
 
     public function create()
@@ -32,9 +32,12 @@ class SubmissionController extends Controller
     }
 
     public function show($id)
-    {   
-        $submission= Submission::find($id);
-        
+    {
+        $submission = Submission::find($id);
+        if (!$submission->point) {
+            $submission->point = $this->calcPoint($submission);
+            $submission->save();
+        }
         $submission->choicesubmissions;
         return response()->json($submission);
     }
@@ -54,11 +57,9 @@ class SubmissionController extends Controller
         //
     }
 
-    public static function calcPoint(Request $request)
+    public static function calcPoint(Submission $submission)
     {
-        $submission_id = $request->input('submission_id');
-        $submission = Submission::find($submission_id);
-        $answers = ChoiceSubmission::where('submission_id',$submission_id)->get();
+        $answers = ChoiceSubmission::where('submission_id', $submission->id)->get();
         $test = Test::select('id', 'total_point', 'user_id')->find($submission->test_id);
         $total_point = $test->total_point;
         $total_questions = $test->questions->count();
