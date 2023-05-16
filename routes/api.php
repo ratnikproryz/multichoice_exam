@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers;
 use App\Http\Controllers\ImageController;
 use App\Models\Test;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 /*
@@ -20,49 +21,52 @@ use Illuminate\Support\Facades\Storage;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/register', [Controllers\AuthController::class, 'register']);
-Route::post('/login', [Controllers\AuthController::class, 'login']);
-Route::post('/login-google', [Controllers\AuthController::class, 'loginGoogle']);
+Route::prefix('v1')->group(function () {
 
-Route::resource("/user", Controllers\UserController::class)->only(['index', 'show']);
-Route::resource("/category", Controllers\CategoryController::class)->only(['index', 'show']);
-Route::resource("/topic", Controllers\TopicController::class)->only(['index', 'show']);
-Route::resource('/test', Controllers\TestController::class)->only(['index', 'show']);
-Route::resource('/question', Controllers\QuestionController::class)->only(['index', 'show']);
-Route::resource('/choice', Controllers\ChoiceController::class)->only(['index', 'show']);
+    Route::post('/register', [Controllers\AuthController::class, 'register']);
+    Route::post('/login', [Controllers\AuthController::class, 'login']);
+    Route::post('/login-google', [Controllers\AuthController::class, 'loginGoogle']);
+
+    Route::resource("/user", Controllers\UserController::class)->only(['index', 'show']);
+    Route::resource("/category", Controllers\CategoryController::class)->only(['index', 'show']);
+    Route::resource("/topic", Controllers\TopicController::class)->only(['index', 'show']);
+    Route::resource('/test', Controllers\TestController::class)->only(['index', 'show']);
+    Route::resource('/question', Controllers\QuestionController::class)->only(['index', 'show']);
+    Route::resource('/choice', Controllers\ChoiceController::class)->only(['index', 'show']);
 
 
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/change-password', [Controllers\AuthController::class, 'changePassword']);
-    Route::get('/logout', [Controllers\AuthController::class, 'logout']);
-    Route::resource("/user", Controllers\UserController::class)->only(['store', 'update', 'destroy']);
-    Route::resource("/category", Controllers\CategoryController::class)->only(['store', 'update', 'destroy']);
-    Route::resource("/topic", Controllers\TopicController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('/test', Controllers\TestController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('/question', Controllers\QuestionController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('/choice', Controllers\ChoiceController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('/submission', Controllers\SubmissionController::class);
-    Route::resource('/choice-submission', Controllers\ChoiceSubmissionController::class);
-    Route::get('/calc-point', [Controllers\SubmissionController::class, 'calcPoint']);
-});
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/change-password', [Controllers\AuthController::class, 'changePassword']);
+        Route::get('/logout', [Controllers\AuthController::class, 'logout']);
+        Route::resource("/user", Controllers\UserController::class)->only(['store', 'update', 'destroy']);
+        Route::resource("/category", Controllers\CategoryController::class)->only(['store', 'update', 'destroy']);
+        Route::resource("/topic", Controllers\TopicController::class)->only(['store', 'update', 'destroy']);
+        Route::resource('/test', Controllers\TestController::class)->only(['store', 'update', 'destroy']);
+        Route::resource('/question', Controllers\QuestionController::class)->only(['store', 'update', 'destroy']);
+        Route::resource('/choice', Controllers\ChoiceController::class)->only(['store', 'update', 'destroy']);
+        Route::resource('/submission', Controllers\SubmissionController::class);
+        Route::resource('/choice-submission', Controllers\ChoiceSubmissionController::class);
+        Route::get('/calc-point', [Controllers\SubmissionController::class, 'calcPoint']);
+    });
 
-//route to test apis
-Route::post('/save-image', function (Request $request) {
-    return ImageController::store($request);
-});
-Route::post('/test-question', function (Request $request) {
-    $ans_arr = ['A', "B", 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-    $questions = $request->input('questions');
-    foreach ($questions as $q_index => $question) {
-        echo "<br>Câu " . (++$q_index) . ": " . $question["content"] . "<br>";
-        $choices = $question["choices"];
-        foreach ($choices as $c_index => $choice) {
-            if ($choice['is_answer']) {
-                echo "<b>" . $ans_arr[$c_index] . ". " . $choice["content"] . "</b><br>";
-            } else {
-                echo $ans_arr[$c_index] . ". " . $choice["content"] . "<br>";
+    //route to test apis
+    Route::post('/save-image', function (Request $request) {
+        return ImageController::store($request);
+    });
+    Route::post('/test-question', function (Request $request) {
+        $ans_arr = ['A', "B", 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+        $questions = $request->input('questions');
+        foreach ($questions as $q_index => $question) {
+            echo "<br>Câu " . (++$q_index) . ": " . $question["content"] . "<br>";
+            $choices = $question["choices"];
+            foreach ($choices as $c_index => $choice) {
+                if ($choice['is_answer']) {
+                    echo "<b>" . $ans_arr[$c_index] . ". " . $choice["content"] . "</b><br>";
+                } else {
+                    echo $ans_arr[$c_index] . ". " . $choice["content"] . "<br>";
+                }
             }
         }
-    }
+    });
 });
